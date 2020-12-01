@@ -1,4 +1,4 @@
-function opra(sql) {
+function opra(sql, params) {
   return new Promise(function (resolve, reject) {
     // 加载MySQL模块
     // 创建MySQL连接对象
@@ -17,9 +17,9 @@ function opra(sql) {
     });
     // 执行连接操作
     cn.connect();
-    cn.query(sql, function (err, result) {
+    cn.query(sql, params, function (err, result) {
       if (err) {
-        return reject("数据库操作失败");
+        return reject("数据库操作失败1");
       }
       resolve(result);
     });
