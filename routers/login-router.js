@@ -2,6 +2,7 @@
 
 const express = require("express");
 const path = require("path");
+const utility = require("utility");
 // 拆分路由模块，可以将路由添加到router对象上
 // 在入口文件中通过app.use方法把router中的路由配置到全局
 const router = express.Router();
@@ -12,6 +13,8 @@ const db = require(path.join(__dirname, "../common.js"));
 router.post("/reguser", async (req, res) => {
   // 1、获取表单数据
   var params = req.body;
+  // 对密码进行加密处理
+  params.password = utility.md5(params.password);
   // 插入数据库之前，添加用户名重复性判断
   let csql = "select id from `my-user` where username = ?";
   let flag = await db.opra(csql, params.username);
